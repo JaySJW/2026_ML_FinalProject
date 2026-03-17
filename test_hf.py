@@ -1,7 +1,7 @@
 from huggingface_hub import InferenceClient
 
 # my token
-hf_token = "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"
+hf_token = "YOUR_HUGGINGFACE_TOKEN_HERE"
 
 # using model
 repo_id = "meta-llama/Meta-Llama-3-8B-Instruct"
