@@ -2,7 +2,7 @@ import streamlit as st
 from huggingface_hub import InferenceClient
 
 # AI setup
-hf_token = "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"
+hf_token = "YOUR_HUGGINGFACE_TOKEN_HERE"
 repo_id = "meta-llama/Meta-Llama-3-8B-Instruct"
 client = InferenceClient(model=repo_id, token=hf_token)
 
