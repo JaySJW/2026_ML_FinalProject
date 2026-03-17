@@ -1,7 +1,12 @@
 from huggingface_hub import InferenceClient
+import os
+from dotenv import load_dotenv
 
-# my token
-hf_token = "YOUR_HUGGINGFACE_TOKEN_HERE"
+# open .env
+load_dotenv()
+
+# get my token
+hf_token = os.getenv("HF_TOKEN") 
 
 # using model
 repo_id = "meta-llama/Meta-Llama-3-8B-Instruct"
