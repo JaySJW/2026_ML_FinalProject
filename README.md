@@ -43,3 +43,8 @@ The development of this tool is grounded in recent academic research regarding t
   * *Cognitive Behavioral Therapy (CBT) and Machine Learning (ML)* (IGI Global, Chapter 367702)
   * *AI-Driven CBT: Can Machine-Led Therapy Support Complex Needs?* (LinkedIn Pulse)
   * Relevant studies on digital interventions from *Nature* (s43856-025-01321-8) and *PMC* (PMC10390406).
+ 
+
+17.Mar.2026 - progress
+ <img width="1003" height="867" alt="image" src="https://github.com/user-attachments/assets/ba819c9f-9974-4d4c-8104-848f5807e749" />
+
