@@ -1,26 +1,26 @@
 from huggingface_hub import InferenceClient
 
-# 1. 아까 복사해 둔 본인의 토큰을 아래 따옴표 안에 넣으세요!
+# my token
 hf_token = "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"
 
-# 2. 대화형 모델 선택
-repo_id = "mistralai/Mistral-7B-Instruct-v0.2"
+# using model
+repo_id = "meta-llama/Meta-Llama-3-8B-Instruct"
 
-# 3. 클라이언트 생성
+# generate client
 client = InferenceClient(model=repo_id, token=hf_token)
 
-# 4. '채팅' 형식으로 질문(프롬프트) 만들기
-# 나중에는 여기에 "system" 역할을 추가해서 '너는 CBT 전문가야'라고 설정할 수 있습니다.
+# setting prompts
 messages = [
-    {"role": "user", "content": "My energy level is very low today. Can you recommend 3 very simple and tiny daily routines for me? Please keep it short."}
+    {"role": "system", "content": "You are a helpful and empathetic CBT assistant. Your goal is to help users build small, manageable habits. Keep your answers practical, short, and formatted as a simple checklist."},
+    {"role": "user", "content": "My energy level is 'Low' and my mood is 'Low' today. Can you recommend 3 very simple and tiny daily routines to start my day?"}
 ]
 
-print("AI가 답변을 생각하는 중입니다...\n")
+print("Llama 3 is thinking of CBT-based routines...\n")
 
-# 5. 대화형 명령어(chat_completion) 사용!
-# max_tokens는 AI가 대답할 수 있는 최대 단어 수입니다.
-response = client.chat_completion(messages=messages, max_tokens=200)
-
-print("=== AI의 답변 ===")
-# AI가 준 복잡한 응답 데이터 중에서 '메시지 내용'만 쏙 뽑아옵니다.
-print(response.choices[0].message.content)
+# API
+try:
+    response = client.chat_completion(messages=messages, max_tokens=200)
+    print("=== Llama 3's Recommended Routines ===")
+    print(response.choices[0].message.content)
+except Exception as e:
+    print("Oops, an error occurred! Please check the details:\n", e)
