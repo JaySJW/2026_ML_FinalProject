@@ -1,50 +1,144 @@
-# 2026_ML_FinalProject
+# 🌱 ML-Driven Daily Support Tool for ADHD & Learning Difficulties
+**By [Jiwon Shon]**
 
+> A CBT-informed, adaptive micro-routine generator for people whose daily energy and focus fluctuate.
 
-# Project Proposal: ML-Driven Daily Support Tool for ADHD & Learning Difficulties
+---
 
-## 1. Project Overview & Motivation
-* **Objective:** To develop a machine learning-based daily support tool designed for individuals with ADHD or learning difficulties.
-* **Core Approach:** While medication and professional counseling are essential, this tool focuses on providing everyday, micro-level assistance based on Cognitive Behavioral Therapy (CBT) principles.
-* **Methodology (Autoethnographic Approach):** Due to the limited timeframe for broad user research, the initial prototype will be built entirely around my personal experiences and specific needs ("scratching my own itch").
-* **Scope of Assessment:** The immediate goal is to build a functional prototype tailored to my needs. Considerations for general usage, scalability, and market deployment will be extensively discussed in the "Future Work" section of the final documentation.
+## 📖 Overview
 
-## 2. Core Philosophy & System Requirements
-* **Strict Privacy & Context Awareness:** The tool must deeply understand my specific background and behavioral patterns. However, this highly sensitive data must be strictly protected with zero risk of external leakage or secondary usage.
-* **Long-term Sustainability:** It must be easily accessible at any given moment and designed for sustainable, long-term use without causing burnout.
-* **Focus on the "Trivial but Crucial":** The tool is designed to assist with minor, everyday struggles that may seem trivial to neurotypical individuals but are actually critical hurdles for those with ADHD.
-* **Foundational Premise:** The entire system is built on the premise that there is a very strong correlation between a user's Mood and Energy levels.
+Most productivity apps assume users have consistent capacity. This project starts from the opposite assumption: **capacity varies day by day, and the same goal needs differently-sized actions depending on today's state.**
 
-## 3. Key Differentiator: The Dynamic Checklist
-While there are many checklist apps on the market, this tool differentiates itself through adaptive, ML-driven personalization:
-* **State-Based Adjustment:** The daily checklist automatically adjusts its volume and intensity based on the user's daily Mood and Energy levels (Categorized into Low / Mid / High).
-* **Performance-Based Adjustment:** The routines also dynamically adapt based on the user's recent achievement/completion rates.
-* **Building a "Safety Net":** The ultimate goal is to help users subconsciously accumulate good micro-habits. Once ingrained, these habits act as a safety net—so even on extremely bad days, the user does not fall into a deep slump and can bounce back quickly.
+The app takes an abstract "ideal self" statement, collects the user's current energy (0–10) and mood, and returns three tiny, mood-aware, capacity-appropriate actions. An adaptive layer then learns from past completion patterns and adjusts future suggestions accordingly.
 
-## 4. User Experience (UX) & Additional Features
-* **Ultra-Low Friction:** Initiating a task or even opening the app must require zero mental effort. The onboarding process must be extremely simple.
-* **Smart Pacing:** The tool will guide users to take appropriate, well-timed breaks to prevent hyperfocus burnout.
-* **In-App AI Assistant:** If the user feels stuck, a built-in AI guide is available to resolve the issue instantly without leaving the flow.
-* **Zero Notification Fatigue:** The tool must not overwhelm the user with excessive alerts.
-* **Seamless Ecosystem:** Automatic synchronization across multiple devices (Smartphone, Tablet, PC, Smartwatch).
+The design is **autoethnographic** — it began as a tool the developer needed for themselves, and was then generalised into a prototype usable by others navigating ADHD, learning difficulties, anxiety, or burnout.
 
-## 5. Market & Competitor Analysis (Existing Tools)
-To ensure this project provides unique value, I have reviewed existing commercial tools targeting similar demographics:
-* **Tiimo:** A highly visual daily planner designed for neurodivergent individuals (ADHD/Autism).
-* **Lunatask:** A privacy-first task manager with built-in habit and mood tracking.
-* **Little Lighthouse (BlueSignum):** An app focused on emotional tracking and guiding users through light, mood-based routines.
-* **Limitation of Existing Tools & My Value Proposition:** While these apps are excellent at scheduling or tracking, they largely rely on static lists. My proposed tool utilizes Machine Learning (LLMs) to **dynamically generate and adjust** the micro-routines in real-time based on the user's specific energy/mood inputs, acting more like a personalized CBT assistant than a simple calendar.
+---
 
-## 6. Theoretical Foundation & Related Research
-The development of this tool is grounded in recent academic research regarding the intersection of Machine Learning and Cognitive Behavioral Therapy (CBT):
-* AI and ML are increasingly recognized as viable methods to automate and personalize CBT interventions, making therapy more accessible for daily support.
-* Research indicates that Machine-Led Therapy can effectively support complex psychological needs by analyzing behavioral patterns and providing timely, context-aware interventions.
-* **Key References:**
-  * *Cognitive Behavioral Therapy (CBT) and Machine Learning (ML)* (IGI Global, Chapter 367702)
-  * *AI-Driven CBT: Can Machine-Led Therapy Support Complex Needs?* (LinkedIn Pulse)
-  * Relevant studies on digital interventions from *Nature* (s43856-025-01321-8) and *PMC* (PMC10390406).
- 
+## ✨ Key Features
 
-17.Mar.2026 - progress
- <img width="1003" height="867" alt="image" src="https://github.com/user-attachments/assets/ba819c9f-9974-4d4c-8104-848f5807e749" />
+### 🎯 Dynamic Checklist
+The same goal produces different intensity tasks based on today's energy level:
+- **SURVIVAL MODE** (energy 0–3) → 1–3 minute micro-tasks
+- **MAINTENANCE MODE** (energy 4–7) → 5–15 minute bite-sized tasks
+- **CHALLENGE MODE** (energy 8–10) → 20–45 minute standard tasks
+
+### 👤 Personalised Onboarding
+On first launch, six quick questions collect persistent context — name, age range, main challenges, current role, what drains the user, and what grounds them. This profile is injected into every subsequent prompt.
+
+### 📊 Session History & Insight Card
+Every generation is stored locally. The app shows a real-time summary card of the user's last 7 days: days tracked, average energy, completion rate, and most frequent moods.
+
+### 🔁 Two-Layer Adaptive System
+The heart of the project. Before the LLM is called, a rule-based layer analyses recent patterns and can override the mode:
+- **Low recent completion (<40%)** → intensity is stepped down (e.g. MAINTENANCE → SURVIVAL)
+- **Chronically low energy (avg <3.5)** → forces restorative tasks
+- **High consistency (≥80%, energy ≥6)** → allows a slight step up
+
+This creates a closed feedback loop: *user actions → stored data → pattern analysis → next-day adaptation.*
+
+### 🎬 Demo Mode
+A "Load demo data" button seeds 7 days of realistic fake history, letting the adaptive features be demonstrated immediately without waiting for organic data to accumulate.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Mobile UI | React Native + Expo |
+| Navigation | React Navigation (native-stack) |
+| Local storage | @react-native-async-storage/async-storage |
+| Backend framework | FastAPI (Python) |
+| ASGI server | Uvicorn |
+| Data validation | Pydantic |
+| LLM | Meta Llama 3 8B Instruct (via Hugging Face Inference API) |
+| Language | TypeScript / JavaScript (frontend), Python (backend) |
+
+---
+
+## 🚀 Running Locally
+
+### Prerequisites
+- **Node.js** v18+
+- **Python** 3.10+
+- A **Hugging Face account** with access to `meta-llama/Meta-Llama-3-8B-Instruct`
+- iPhone or Android phone with the **Expo Go** app (on the same Wi-Fi as your development machine)
+
+---
+
+### 1. Backend (FastAPI)
+
+```bash
+cd prototype_mobileApp/backend
+
+# Create and activate virtual environment (Windows)
+python -m venv venv
+venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Create a .env file with your Hugging Face token
+# HF_TOKEN=hf_xxxxxxxxxxxxxxxx
+
+# Run the server (listen on all interfaces so the phone can reach it)
+uvicorn api:app --reload --host 0.0.0.0 --port 8000
+```
+
+Verify by opening `http://localhost:8000/docs` in a browser. You should see Swagger UI with `GET /` and `POST /get-routine`.
+
+---
+
+### 2. Frontend (React Native + Expo)
+
+In a separate terminal:
+
+```bash
+cd prototype_mobileApp/frontend
+
+# Install dependencies
+npm install
+
+# Start the Expo dev server
+npx expo start
+```
+
+A QR code appears. Open the Camera app on iPhone (or Expo Go on Android) and scan it.
+
+> ⚠️ **Before running, edit `screens/HomeScreen.js`** and change the `API_URL` constant at the top to your development machine's local IPv4 address (e.g. `http://192.168.1.x:8000/get-routine`). Run `ipconfig` (Windows) or `ifconfig` (macOS) to find it.
+
+---
+
+## 🧪 Demo Flow (for evaluation)
+
+The app ships with a "Load demo data" button for immediate demonstration of the adaptive features. Recommended flow:
+
+1. Complete onboarding (any answers).
+2. On the home screen, scroll down and tap **"Load demo data"** — this seeds 7 days of history with a low completion rate.
+3. Set **Energy = 7** (this would normally trigger MAINTENANCE mode).
+4. Pick any mood and tap **"Get Today's Custom Routine"**.
+5. Observe the adaptive override in action:
+   - Mode shows **SURVIVAL MODE**  
+   - A small tag shows `(adjusted from MAINTENANCE MODE)`  
+   - A note appears: *"Recent completion has been low — today is eased to survival mode."*
+
+This demonstrates the rule-based adaptation layer overriding the energy-based default, driven by the user's actual usage pattern.
+
+---
+
+## 🙏 Acknowledgements
+
+- **Meta AI** for the Llama 3 open model  
+- **Hugging Face** for Inference API access  
+- **FastAPI, Expo, and React Native** communities for excellent documentation  
+- **Module tutor** for feedback on the autoethnographic direction and ML scope
+
+---
+
+## 📝 License
+
+This project is a student submission for academic assessment. Code is provided for review purposes; external reuse should credit the original author.
+
+---
 
